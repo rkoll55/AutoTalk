@@ -1,33 +1,74 @@
-import React from 'react';
-import '../assets/UserDashboard.css'
-interface UserData {
+import React, { useEffect, useRef } from 'react';
+import '../assets/UserDashboard.css'; // Assuming you have this CSS file created
+import logo from '../assets/logo_dark.png'; // Adjust the path accordingly
+import {FaUserAstronaut, FaCogs, FaSignOutAlt} from 'react-icons/fa'
+
+type UserDashboardProps = {
+  userData: {
     username: string;
     email: string;
     memberSince: Date;
-}
+  },
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-interface UserDashboardProps {
-    userData: UserData;
-}
+const UserDashboard: React.FC<UserDashboardProps> = ({ userData, setIsLoggedIn }) => {
+    const videoRef = useRef<HTMLVideoElement | null>(null);
 
-const UserDashboard: React.FC<UserDashboardProps> = ({ userData }) => {
+    useEffect(() => {
+        document.body.classList.add('dashboard-page');
+
+        // Start the video stream when the component is mounted
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then((stream) => {
+                    if (videoRef.current) {
+                        videoRef.current.srcObject = stream;
+                    }
+                })
+                .catch((err) => {
+                    console.log("An error occurred: " + err);
+                });
+        }
+
+        // Stop the video stream when the component is unmounted
+        return () => {
+            document.body.classList.remove('dashboard-page');
+            if (videoRef.current && videoRef.current.srcObject) {
+                let tracks = (videoRef.current.srcObject as MediaStream).getTracks();
+                tracks.forEach(track => track.stop());
+            }
+        };
+    }, []);
+
+    const handleLogout = () => {
+      // Here you can add other logout related functionality if needed
+      setIsLoggedIn(false);
+    };
+
     return (
-        <div className="dashboard-container">
-            <header className="dashboard-header">
-                <h1>Welcome, {userData.username}!</h1>
-                <p>Email: {userData.email}</p>
-                <p>Member since: {new Intl.DateTimeFormat('en-US').format(userData.memberSince)}</p>
-            </header>
-
-            <section className="dashboard-content">
-                <h2>Your Actions</h2>
+        <div className="wrapper">
+            <nav className="vertical-nav">
+                <div className="header-logo">
+                    <img src={logo} alt="Logo" />
+                </div>
                 <ul>
-                    <li><a href="/profile">Edit Profile</a></li>
-                    <li><a href="/settings">Settings</a></li>
-                    <li><a href="/orders">View Orders</a></li>
-                    <li><a href="/logout">Logout</a></li>
+                    <li><a href='#'><FaUserAstronaut className='nav-icons'/></a></li>
+                    <li><a href='#'><FaCogs className='nav-icons'/></a></li>
+                    <li><a href='#'><FaSignOutAlt onClick={handleLogout} className='nav-icons'/></a></li>
                 </ul>
-            </section>
+            </nav>
+            <div className='dashboard'>
+
+                <main className="main-content">
+                    <FaUserAstronaut className='profile-icon'/>
+                    <h2>Welcome, {userData.username}</h2>
+                </main>
+                <div className="main-header">
+                    {/* Video Element to display the camera feed */}
+                    <video ref={videoRef} autoPlay={true} className='main-camera'></video>
+                </div>
+            </div>
         </div>
     );
 }

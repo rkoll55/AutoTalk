@@ -21,9 +21,10 @@ const App: React.FC = () => {
 
   if (isLoggedIn && currentUser) {
       // return <h1>Welcome, {currentUser}!</h1>;
-      return <UserDashboard userData={mockUserData}/>
+      return <UserDashboard userData={mockUserData} setIsLoggedIn={setIsLoggedIn}/>
   }
 
+    // return <UserDashboard userData={mockUserData} setIsLoggedIn={setIsLoggedIn}/>
   return <Login onLoginSuccess={handleLoginSuccess} />;
 }
 

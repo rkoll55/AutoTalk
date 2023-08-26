@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+body  {
+    font-family: 'Arial', sans-serif; /* Just adding a default font for better look */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh; /* viewport height units */
+}

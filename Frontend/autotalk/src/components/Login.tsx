@@ -1,5 +1,5 @@
 // Login.tsx
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import '../assets/Login.css'; // Importing the CSS file
 import logo from '../assets/logo_dark.png'; // Adjust the path accordingly
 
@@ -20,6 +20,14 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
             setError('Please provide both username and password.');
         }
     };
+
+    useEffect(() => {
+        document.body.classList.add('login-page');
+
+        return () => {
+            document.body.classList.remove('login-page');
+        };
+    }, []);
 
     return (
         <div className="login-container">
