@@ -24,7 +24,7 @@ const App: React.FC = () => {
       return <UserDashboard userName={currentUser} setIsLoggedIn={setIsLoggedIn}/>
   }
 
-    // return <UserDashboard userData={mockUserData} setIsLoggedIn={setIsLoggedIn}/>
+      // return <UserDashboard userName={'test'} setIsLoggedIn={setIsLoggedIn}/>
   return <Login onLoginSuccess={handleLoginSuccess} />;
 }
 

@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify, make_response
 import pickle
 import cv2
 import mediapipe as mp
@@ -88,6 +88,11 @@ def predict():
 
     cap.release()
     cv2.destroyAllWindows()
+
+@app.route('/why')
+def why_are_you_here():
+    # return jsonify({"promptText": "This is a prompt from the Flask server!"})
+    return make_response("this ! test ! 2", 200)
 
 
 if __name__ == "__main__":
