@@ -144,19 +144,38 @@ body.dashboard-page, html {
     border-radius: 5px;
     height: 520px;
   }
+  .finished-line{
+    display: flex;
+  }
 
   .main-content p{
     color:#6c6c6c;
     letter-spacing: 3px;
     padding-bottom: 20px;
   }
+  .prompt-done{
+    color: green;
+    font-size: 36px;
+    letter-spacing: 3px;
+    padding-left: 35px;
+  }
+  .icon-done{
+    color: green;
+    font-size: 68px;
+  }
   .game-start{
     font-size: 24px;
     color: black;
 
   }
-  .prompt{
+  .prompt  {
     color:#6c6c6c;
+    letter-spacing: 3px;
+    padding-bottom: 20px;
+  }
+  .active-text{
+    color: green;
+    font-weight: bold;
     letter-spacing: 3px;
     padding-bottom: 20px;
   }

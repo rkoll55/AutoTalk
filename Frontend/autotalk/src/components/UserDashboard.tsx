@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../assets/UserDashboard.css'; // Assuming you have this CSS file created
 import logo from '../assets/logo_dark.png'; // Adjust the path accordingly
-import {FaUserAstronaut, FaCogs, FaSignOutAlt, FaHandSparkles, FaMedal, FaSignLanguage} from 'react-icons/fa'
+import {FaUserAstronaut, FaCogs, FaSignOutAlt, FaHandSparkles, FaMedal, FaSignLanguage, FaThumbsUp} from 'react-icons/fa'
 import axios from 'axios'; 
 
 type UserDashboardProps = {
@@ -19,7 +19,9 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ userData, setIsLoggedIn }
     const [showMain, setShowMain] = useState(true);
     const [shrink, setShrink] = useState(false);
     const [countdown, setCountdown] = useState<number>(3);
+    const [splitPhrases, setSplitPhrases] = useState<JSX.Element[]>([]);
     const [promptText, setPromptText] = useState<string>('');
+    const [activePhraseIndex, setActivePhraseIndex] = useState<number>(-1); // Initialize to -1
 
     useEffect(() => {
         if (!showMain && countdown > 0) {
@@ -33,17 +35,54 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ userData, setIsLoggedIn }
         }
     }, [showMain, countdown]);
 
-    useEffect(() => {
-        axios
-          .get('/api/get-prompt-text') // Replace with your API endpoint
-          .then((response) => {
-            // Update the prompt text state
-            setPromptText(response.data.promptText);
-          })
-          .catch((error) => {
-            console.error('Error fetching prompt text:', error);
-          });
-      }, []);
+      // Simulate API response
+  const dummyApiResponse = {
+    promptText: "Why ! are you ! here?"
+  };
+
+  useEffect(() => {
+    // Simulate API call
+    // Replace this with your actual API call if needed
+    const simulateApiCall = () => {
+      return new Promise<{ promptText: string }>((resolve) => {
+        setTimeout(() => {
+          resolve(dummyApiResponse);
+        }, 1000);
+      });
+    };
+
+    simulateApiCall()
+    .then((response) => {
+        const promptText = response.promptText;
+        const phrases = promptText.split('!').map((phrase: string, index: number) => (
+          <span
+            key={index}
+            className={index <= activePhraseIndex ? 'active-text' : 'inactive-text'}
+            onClick={() => handlePhraseClick(index)}
+          >
+            {phrase.trim()}
+            {index !== promptText.split('!').length - 1 && ' '} {/* Add space except for the last phrase */}
+          </span>
+        ));
+        setSplitPhrases(phrases);
+      })
+      .catch((error) => {
+        console.error('Error fetching prompt text:', error);
+      });
+  }, [activePhraseIndex]);
+    // useEffect(() => {
+    //     axios
+    //       .get('/api/get-prompt-text') // Replace with your API endpoint
+    //       .then((response) => {
+    //         // Update the prompt text state
+    //         const promptText = response.data.promptText;
+    //         const phrases = promptText.split('!').map((phrase: string) => phrase.trim()); 
+    //         setSplitPhrases(phrases);
+    //       })
+    //       .catch((error) => {
+    //         console.error('Error fetching prompt text:', error);
+    //       });
+    //   }, []);
     
 
     useEffect(() => {
@@ -78,6 +117,20 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ userData, setIsLoggedIn }
     };
 
 
+    const handlePhraseClick = (index: number) => {
+        setActivePhraseIndex(index);
+        const updatedPhrases = splitPhrases.map((phrase, i) => (
+        <span
+            key={i}
+            className={i <= index ? 'green-text' : 'grey-text'}
+            onClick={() => handlePhraseClick(i)}
+        >
+            {phrase.props.children}
+        </span>
+        ));
+        setSplitPhrases(updatedPhrases);
+    };
+
     const handleStart = () => {
         setShrink(true);
         
@@ -87,6 +140,12 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ userData, setIsLoggedIn }
             setShowMain(!showMain);
         }, 500); // This should match the transition time you set in the CSS (0.5s = 500ms)
     };
+    const handleGameStartClick = () => {
+        setActivePhraseIndex(prevIndex => prevIndex + 1);
+    };
+    const isEntirePromptActive = activePhraseIndex === splitPhrases.length - 1;
+
+    
 
     return (
         <div className="wrapper">
@@ -121,8 +180,25 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ userData, setIsLoggedIn }
                 )}
                 {!showMain && countdown==0 && (
                     <main className="main-game">
-                        <h2 className='game-start'>Game starts now!</h2>
-                        <p className='prompt'>{promptText}</p>
+                        <h2 onClick={handleGameStartClick} className='game-start'>Game starts now!</h2>
+                        {/* <p className='prompt'>{promptText}</p> */}
+                        <p className="prompt">
+                            {splitPhrases.map((phrase, index) => (
+                                <span
+                                    key={index}
+                                    className="grey-text"
+                                    onClick={() => handlePhraseClick(index)}
+                                >
+                                    {phrase}
+                                </span>
+                            ))}
+                        </p>
+                        {isEntirePromptActive && (
+                            <div className='finished-line'>
+                                <FaThumbsUp className='icon-done'/>
+                                <p className='prompt-done'>Congratulations</p>
+                            </div>
+                        )}
                     </main>
                 )}
                 <div className="main-header">
