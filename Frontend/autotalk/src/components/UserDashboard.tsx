@@ -18,7 +18,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ userData, setIsLoggedIn }
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const [showMain, setShowMain] = useState(true);
     const [shrink, setShrink] = useState(false);
-    const [countdown, setCountdown] = useState<number>(3);
+    const [countdown, setCountdown] = useState<number>(0);
     const [splitPhrases, setSplitPhrases] = useState<JSX.Element[]>([]);
     const [promptText, setPromptText] = useState<string>('');
     const [activePhraseIndex, setActivePhraseIndex] = useState<number>(-1); // Initialize to -1
@@ -70,19 +70,6 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ userData, setIsLoggedIn }
         console.error('Error fetching prompt text:', error);
       });
   }, [activePhraseIndex]);
-    // useEffect(() => {
-    //     axios
-    //       .get('/api/get-prompt-text') // Replace with your API endpoint
-    //       .then((response) => {
-    //         // Update the prompt text state
-    //         const promptText = response.data.promptText;
-    //         const phrases = promptText.split('!').map((phrase: string) => phrase.trim()); 
-    //         setSplitPhrases(phrases);
-    //       })
-    //       .catch((error) => {
-    //         console.error('Error fetching prompt text:', error);
-    //       });
-    //   }, []);
     
 
     useEffect(() => {

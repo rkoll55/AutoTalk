@@ -160,8 +160,13 @@ body.dashboard-page, html {
     padding-left: 35px;
   }
   .icon-done{
-    color: green;
+    /* color: green; */
     font-size: 68px;
+    background-image: linear-gradient(to left, #0ba360 0%, #35a783 100%);
+    border-radius: 5px;
+    color: #fff;
+    font-size: 80px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   .game-start{
     font-size: 24px;
@@ -201,3 +206,17 @@ body.dashboard-page, html {
   }
 
   
+  @keyframes slideIn {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .finished-line {
+    animation: slideIn 1s ease-in-out; /* Adjust the duration and easing as needed */
+  }
