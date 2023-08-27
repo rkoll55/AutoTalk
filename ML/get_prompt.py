@@ -1,4 +1,6 @@
 import random
+from flask import Flask
+app=Flask(__name__)
 
 labels_dict = {
     0: 'A', 1: 'B', 2: 'C', 3: 'D', 4: 'E', 5: 'F', 6: 'G', 7: 'H', 8: 'I', 9: 'J',
@@ -7,13 +9,12 @@ labels_dict = {
     27: "Hello", 28: "Thank You", 29: "Please", 30: "I", 31: "You", 32: "Yes", 
 }
 
-def get_prompt(labels_dict):
+@app.route("/")
+def get_prompt():
     prompt = ""
     i = random.randint(26, len(labels_dict)-1) 
     prompt = labels_dict[i]
     return prompt
 
-
-if __name__ == """__main__""":
-    for i in range(10000):
-        print(get_prompt(labels_dict))
+if __name__ == "__main__":
+    app.run()
