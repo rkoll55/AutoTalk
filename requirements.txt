@@ -21,3 +21,5 @@ twilio==8.7.0
 urllib3==2.0.4
 Werkzeug==2.3.7
 yarl==1.9.2
+pyyaml
+typeguard
