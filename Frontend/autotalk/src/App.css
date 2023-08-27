@@ -38,7 +38,8 @@
 }
 
 body  {
-    font-family: 'Arial', sans-serif; /* Just adding a default font for better look */
+    /* font-family: 'Arial', sans-serif; Just adding a default font for better look */
+    font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace; 
     margin: 0;
     padding: 0;
     display: flex;

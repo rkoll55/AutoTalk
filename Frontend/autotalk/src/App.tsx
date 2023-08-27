@@ -24,8 +24,8 @@ const App: React.FC = () => {
       return <UserDashboard userData={mockUserData} setIsLoggedIn={setIsLoggedIn}/>
   }
 
-    // return <UserDashboard userData={mockUserData} setIsLoggedIn={setIsLoggedIn}/>
-  return <Login onLoginSuccess={handleLoginSuccess} />;
+    return <UserDashboard userData={mockUserData} setIsLoggedIn={setIsLoggedIn}/>
+  // return <Login onLoginSuccess={handleLoginSuccess} />;
 }
 
 export default App;

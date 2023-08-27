@@ -1,7 +1,7 @@
 body.login-page  {
     justify-content: center;
     align-items: center;
-    background-image: linear-gradient(to bottom, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
+    background-image: linear-gradient(to top, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
 }
 
 .login-container {
@@ -56,15 +56,10 @@ input:focus {
 button {
     width: 100%;
     padding: 10px;
-    /* background-color: #007bff; */
     color: #fff;
     border: none;
     border-radius: 3px;
-
-    /* background-image: linear-gradient(to left, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 120%); */
-    /* background-image: linear-gradient(to right, #FF057C 0%, #8D0B93 50%, #321575 100%); */
     background-image: linear-gradient(to left, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
-    /* background-image: linear-gradient(to left, #7028e4 0%, #e5b2ca 200%); */
     transition: transform .4s; /* Animation */
 }
 button:hover{
