@@ -4,11 +4,11 @@ import './App.css';
 import Login from './components/Login';
 import UserDashboard from './components/UserDashboard';
 
-const mockUserData = {
-  username: 'JohnDoe',
-  email: 'johndoe@example.com',
-  memberSince: new Date('2021-01-01')
-}
+// const mockUserData = {
+//   username: 'JohnDoe',
+//   email: 'johndoe@example.com',
+//   memberSince: new Date('2021-01-01')
+// }
 
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -21,11 +21,11 @@ const App: React.FC = () => {
 
   if (isLoggedIn && currentUser) {
       // return <h1>Welcome, {currentUser}!</h1>;
-      return <UserDashboard userData={mockUserData} setIsLoggedIn={setIsLoggedIn}/>
+      return <UserDashboard userName={currentUser} setIsLoggedIn={setIsLoggedIn}/>
   }
 
-    return <UserDashboard userData={mockUserData} setIsLoggedIn={setIsLoggedIn}/>
-  // return <Login onLoginSuccess={handleLoginSuccess} />;
+    // return <UserDashboard userData={mockUserData} setIsLoggedIn={setIsLoggedIn}/>
+  return <Login onLoginSuccess={handleLoginSuccess} />;
 }
 
 export default App;

@@ -5,20 +5,16 @@ import {FaUserAstronaut, FaCogs, FaSignOutAlt, FaHandSparkles, FaMedal, FaSignLa
 import axios from 'axios'; 
 
 type UserDashboardProps = {
-  userData: {
-    username: string;
-    email: string;
-    memberSince: Date;
-  },
+  userName: string; // Change the type to string
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   
 };
 
-const UserDashboard: React.FC<UserDashboardProps> = ({ userData, setIsLoggedIn }) => {
+const UserDashboard: React.FC<UserDashboardProps> = ({ userName, setIsLoggedIn }) => {
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const [showMain, setShowMain] = useState(true);
     const [shrink, setShrink] = useState(false);
-    const [countdown, setCountdown] = useState<number>(0);
+    const [countdown, setCountdown] = useState<number>(3);
     const [splitPhrases, setSplitPhrases] = useState<JSX.Element[]>([]);
     const [promptText, setPromptText] = useState<string>('');
     const [activePhraseIndex, setActivePhraseIndex] = useState<number>(-1); // Initialize to -1
@@ -152,7 +148,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ userData, setIsLoggedIn }
                 {showMain && (
                 <main className={`main-content ${shrink ? 'shrink' : ''}`}>
                     <FaUserAstronaut className='profile-icon'/>
-                    <h2>Welcome, {userData.username}</h2>
+                    <h2>Welcome, {userName}</h2>
                     <p>"Welcome to SignQuest – the ultimate fusion of learning and play! Immerse yourself in a world where sign language comes alive as a game. Once you press start, you will receive prompts, express them through sign language to the camera. Get ready to embark on an exciting journey of communication and skill with SignQuest!"</p>
                     <button className="start-button" onClick={handleStart}>
                       <FaHandSparkles/>
